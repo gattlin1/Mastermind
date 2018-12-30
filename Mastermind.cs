@@ -32,17 +32,70 @@ namespace mastermind
         // Performs the processes of the game
         public void play()
         {
-            
+            peg_color[] user_code;
+            user_code = guess(); 
+            compare(user_code);
+            --num_tries;
         }
 
         private peg_color[] guess() 
         {
+            string input;
+            string [] guess = new string[CODE_LENGTH];
+
+            do{
+                Console.WriteLine($"You have {num_tries} tries left.\nPlease put spaces inbetween each" +
+                                " color in you guess.\nGuess: ");
+                input = Console.ReadLine();
+                guess = input.Split(' ');
+            }
+            while(guess.Length != CODE_LENGTH);
             
+            return convert_to_peg(guess);
         }
 
         private peg_color[] convert_to_peg(string[] guess)
         {
-            
+            peg_color[] enum_version = new peg_color[CODE_LENGTH];
+            for (int i = 0; i < guess.Length; i++) 
+            {
+                switch(guess[i].ToLower())
+                {
+                    case "red": {
+                        enum_version[i] = peg_color.Red;
+                        break;
+                    }
+                    case "blue": {
+                        enum_version[i] = peg_color.Blue;
+                        break;
+                    }
+                    case "green": {
+                        enum_version[i] = peg_color.Green;
+                        break;
+                    }
+                    case "yellow": {
+                        enum_version[i] = peg_color.Yellow;
+                        break;
+                    }
+                    case "pink": {
+                        enum_version[i] = peg_color.Pink;
+                        break;
+                    }
+                    case "white": {
+                        enum_version[i] = peg_color.White;
+                        break;
+                    }
+                    case "black": {
+                        enum_version[i] = peg_color.Black;
+                        break;
+                    }
+                    default : {
+                        enum_version[i] = peg_color.Empty;
+                        break;
+                    };
+                }
+            }
+            return enum_version;
         }
 
         private void compare(peg_color[] guess)
