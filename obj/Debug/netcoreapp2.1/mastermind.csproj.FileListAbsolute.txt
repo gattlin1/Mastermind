@@ -1,0 +1,11 @@
+/Users/gattlinwalker/Documents/csc_projects/mastermind/bin/Debug/netcoreapp2.1/mastermind.deps.json
+/Users/gattlinwalker/Documents/csc_projects/mastermind/bin/Debug/netcoreapp2.1/mastermind.runtimeconfig.json
+/Users/gattlinwalker/Documents/csc_projects/mastermind/bin/Debug/netcoreapp2.1/mastermind.runtimeconfig.dev.json
+/Users/gattlinwalker/Documents/csc_projects/mastermind/bin/Debug/netcoreapp2.1/mastermind.dll
+/Users/gattlinwalker/Documents/csc_projects/mastermind/bin/Debug/netcoreapp2.1/mastermind.pdb
+/Users/gattlinwalker/Documents/csc_projects/mastermind/obj/Debug/netcoreapp2.1/mastermind.csprojAssemblyReference.cache
+/Users/gattlinwalker/Documents/csc_projects/mastermind/obj/Debug/netcoreapp2.1/mastermind.csproj.CoreCompileInputs.cache
+/Users/gattlinwalker/Documents/csc_projects/mastermind/obj/Debug/netcoreapp2.1/mastermind.AssemblyInfoInputs.cache
+/Users/gattlinwalker/Documents/csc_projects/mastermind/obj/Debug/netcoreapp2.1/mastermind.AssemblyInfo.cs
+/Users/gattlinwalker/Documents/csc_projects/mastermind/obj/Debug/netcoreapp2.1/mastermind.dll
+/Users/gattlinwalker/Documents/csc_projects/mastermind/obj/Debug/netcoreapp2.1/mastermind.pdb

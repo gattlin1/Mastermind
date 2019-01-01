@@ -1,12 +1,17 @@
 ﻿using System;
 
-namespace Mastermind
+namespace mastermind
 {
-    class Program
+    public class MainClass
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            Console.WriteLine("Hello World!");
+            Game game_inst = new Game(10);
+            while(!game_inst.is_game_over())
+            {
+                game_inst.guess_code(); 
+                game_inst.compare();
+            }
         }
     }
 }

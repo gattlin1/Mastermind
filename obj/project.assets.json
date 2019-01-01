@@ -687,11 +687,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/gattlinwalker/Documents/csc_projects/Mastermind/Mastermind.csproj",
-      "projectName": "Mastermind",
-      "projectPath": "/Users/gattlinwalker/Documents/csc_projects/Mastermind/Mastermind.csproj",
+      "projectUniqueName": "/Users/gattlinwalker/Documents/csc_projects/mastermind/mastermind.csproj",
+      "projectName": "mastermind",
+      "projectPath": "/Users/gattlinwalker/Documents/csc_projects/mastermind/mastermind.csproj",
       "packagesPath": "/Users/gattlinwalker/.nuget/packages/",
-      "outputPath": "/Users/gattlinwalker/Documents/csc_projects/Mastermind/obj/",
+      "outputPath": "/Users/gattlinwalker/Documents/csc_projects/mastermind/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
