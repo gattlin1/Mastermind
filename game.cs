@@ -1,16 +1,21 @@
 using System;
 using System.Linq;
-
+using System.Collections.Generic;
 namespace mastermind
 {
     public class Game
     {
         public int num_tries{ get; private set; }
-        public enum peg_color { Red, Blue, Green, Yellow, Pink, White, Black, Empty };
+        public HashSet<string> peg_color = new HashSet<string> { "red", "blue", "green", "yellow", "pink", "white", "black", "empty" };
         private const int CODE_LENGTH = 4;
-        private peg_color[] code = new peg_color[CODE_LENGTH], user_guess = new peg_color[CODE_LENGTH];
+        private string[] code = new string[CODE_LENGTH], user_guess = new string[CODE_LENGTH];
 
-        // At declaration, generate the code to be guessed by the user.
+        public Game()
+        {
+            num_tries = 10;
+            code = generate_code();
+        }
+
         public Game(int tries)
         {
             num_tries = tries;
@@ -18,14 +23,13 @@ namespace mastermind
         }
         
         // Generates a random code of desired code length
-        private peg_color[] generate_code()
+        private string[] generate_code()
         {
-            Array colors = Enum.GetValues(typeof(peg_color));
             Random rnd = new Random();
-            peg_color[] code = new peg_color[CODE_LENGTH];
+            string [] code_as_array = peg_color.ToArray();
             for (int i = 0; i < CODE_LENGTH; i++)
             {
-                code[i] = (peg_color)colors.GetValue(rnd.Next(0,7));
+                code[i] = code_as_array[(rnd.Next(peg_color.Count))];
             }
             return code;
         }
@@ -33,30 +37,22 @@ namespace mastermind
         public void guess_code() 
         {
             string input;
-            string [] input_split_to_array = new string[CODE_LENGTH];
 
             do{
                 Console.WriteLine($"You have {num_tries} left.\nPlease put spaces inbetween each" +
                                 " color in you guess. What is your guess?");
                 input = Console.ReadLine();
-                input_split_to_array = input.Split(' ');
+                user_guess = input.Split(' ');
             }
-            while(!(desired_len(input_split_to_array) && correct_spelling(input_split_to_array)));
+            while(!(desired_len() && correct_spelling()));
             --num_tries;
-
-            convert_to_peg(input_split_to_array);
-
-            for (int i = 0; i < user_guess.Length; i++)
-            {
-                Console.Write(user_guess[i] + ", ");
-            }
         }
 
-        private bool desired_len(string[] guess)
+        private bool desired_len()
         {
-            if (guess.Length != CODE_LENGTH)
+            if (user_guess.Length != CODE_LENGTH)
             {
-                Console.WriteLine($"You entered in {guess.Length} colors. You need {CODE_LENGTH}");
+                Console.WriteLine($"You entered in {user_guess.Length} colors. You need {CODE_LENGTH} colors.");
                 return false;
             }
             else 
@@ -66,73 +62,51 @@ namespace mastermind
         }
 
         // To ensure there is no error when converting the guess into enum values
-        private bool correct_spelling(string[] guess)
+        private bool correct_spelling()
         {
-            string[] correct_spelled_colors = new string[]{ "red", "blue", "green", "yellow", "pink", "white", "black" };
-            for (int i = 0; i < guess.Length; i++)
+            for (int i = 0; i < user_guess.Length; i++)
             {
-                if (!correct_spelled_colors.Contains(guess[i].ToLower()))
+                if (!peg_color.Contains(user_guess[i].ToLower()))
                 {
-                    Console.WriteLine($"Incorrect spelling for the input: {guess[i]}");
+                    Console.WriteLine($"Incorrect spelling for the input: {user_guess[i]}");
+                    Console.WriteLine("The correct colors are: ");
+                    display_set(peg_color);
+
                     return false;
                 }
             }
             return true;
         }
 
-        private void convert_to_peg(string[] guess_input)
+        private void display_set(HashSet<string> set)
+    {
+        Console.Write("{");
+        foreach (string color in set)
         {
-            for (int i = 0; i < guess_input.Length; i++) 
-            {
-                switch(guess_input[i].ToLower())
-                {
-                    case "red": { user_guess[i] = peg_color.Red;
-                        break;
-                    }
-                    case "blue": { user_guess[i] = peg_color.Blue;
-                        break;
-                    }
-                    case "green": { user_guess[i] = peg_color.Green;
-                        break;
-                    }
-                    case "yellow": {  user_guess[i] = peg_color.Yellow;
-                        break;
-                    }
-                    case "pink": { user_guess[i] = peg_color.Pink;
-                        break;
-                    }
-                    case "white": { user_guess[i] = peg_color.White;
-                        break;
-                    }
-                    case "black": { user_guess[i] = peg_color.Black;
-                        break;
-                    }
-                    default : { user_guess[i] = peg_color.Empty; //should not reach here.
-                        break;
-                    };
-                }
-            }
-            
+            Console.Write(" {0}", color);
         }
+        Console.WriteLine(" }");
+    }
 
         public void compare()
         {
             int same_color = 0, same_place_and_color = 0;
-
+            string[] code_ref = code;
+            
             for (int i = 0; i < user_guess.Length; i++) 
             {
-                if (user_guess[i] == code[i])
+                if (user_guess[i] == code_ref[i])
                 {
                     ++same_place_and_color;
                 }
             }
             for (int i = 0; i < user_guess.Length; i++)
             {
-                for (int j = 0; j < code.Length; j++)
+                for (int j = 0; j < code_ref.Length; j++)
                 {
-                    if (user_guess[i] == code[j])
+                    if (user_guess[i] == code_ref[j])
                     {
-                        code[j] = peg_color.Empty; // to prevent duplicate colors from double counting
+                        code_ref[j] = null; // to prevent duplicate colors from double counting
                         ++same_color;
                     }
                 }
