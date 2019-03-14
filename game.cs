@@ -21,7 +21,7 @@ namespace mastermind
             num_tries = tries;
             code = generate_code();
         }
-        
+
         // Generates a random code of desired code length
         private string[] generate_code()
         {
@@ -34,7 +34,7 @@ namespace mastermind
             return code;
         }
 
-        public void guess_code() 
+        public void guess_code()
         {
             string input;
 
@@ -55,7 +55,7 @@ namespace mastermind
                 Console.WriteLine($"You entered in {user_guess.Length} colors. You need {CODE_LENGTH} colors.");
                 return false;
             }
-            else 
+            else
             {
                 return true;
             }
@@ -70,7 +70,7 @@ namespace mastermind
                 {
                     Console.WriteLine($"Incorrect spelling for the input: {user_guess[i]}");
                     Console.WriteLine("The correct colors are: ");
-                    display_set(peg_color);
+                    display_set();
 
                     return false;
                 }
@@ -78,35 +78,35 @@ namespace mastermind
             return true;
         }
 
-        private void display_set(HashSet<string> set)
-    {
-        Console.Write("{");
-        foreach (string color in set)
+        private void display_set()
         {
-            Console.Write(" {0}", color);
+            foreach (string color in peg_color)
+            {
+                Console.Write(" {0}  ", color);
+            }
+            Console.WriteLine();
         }
-        Console.WriteLine(" }");
-    }
 
         public void compare()
         {
             int same_color = 0, same_place_and_color = 0;
-            string[] code_ref = code;
-            
-            for (int i = 0; i < user_guess.Length; i++) 
+            string[] code_to_compare = new string[CODE_LENGTH];
+            Array.Copy(code, 0, code_to_compare, 0, CODE_LENGTH);
+
+            for (int i = 0; i < user_guess.Length; i++)
             {
-                if (user_guess[i] == code_ref[i])
+                if (user_guess[i] == code_to_compare[i])
                 {
                     ++same_place_and_color;
                 }
             }
             for (int i = 0; i < user_guess.Length; i++)
             {
-                for (int j = 0; j < code_ref.Length; j++)
+                for (int j = 0; j < code_to_compare.Length; j++)
                 {
-                    if (user_guess[i] == code_ref[j])
+                    if (user_guess[i] == code_to_compare[j])
                     {
-                        code_ref[j] = null; // to prevent duplicate colors from double counting
+                        code_to_compare[j] = null; // to prevent duplicate colors from double counting
                         ++same_color;
                     }
                 }
@@ -123,10 +123,15 @@ namespace mastermind
             else if (num_tries == 0)
             {
                 Console.WriteLine("Game Over!");
+                Console.Write("The code was: ");
+                for(int i = 0; i < CODE_LENGTH; i++) {
+                    Console.Write(" {0} ", code[i]);
+                }
             }
             else {
                 Console.WriteLine($"Same place and color: {same_place_and_color}");
                 Console.WriteLine($"Same color: {same_color}");
+                Console.WriteLine();
             }
         }
 
